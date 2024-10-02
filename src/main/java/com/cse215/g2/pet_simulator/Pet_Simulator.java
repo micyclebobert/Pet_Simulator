@@ -12,6 +12,6 @@ public class Pet_Simulator {
 
     public static void main(String[] args) {
         Animal a=new Animal();
-        System.out.println("Hello World!");
+        System.out.println("Hello World!"+a.age);
     }
 }
