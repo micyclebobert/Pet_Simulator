@@ -13,6 +13,7 @@ public class Animal {
     // infinity
     int currentHungerLevel;
 
+    //tst
     String[] HUNGER_STATE_NAMES = { "Very Hungry", "Hungry", "Well Fed" };
     int[] HUNGER_STATE_RANGES = { 10, 90 };
     int totalSumOfHungerWhenFeeding = 50, countOfFeeding = 1; // Since we agv it I'm giving it a starting value (to
