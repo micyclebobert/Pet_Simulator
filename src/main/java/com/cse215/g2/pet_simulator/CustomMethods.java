@@ -62,7 +62,7 @@ public class CustomMethods {
         new File(getFullPathString("SettingsValue"));
         //Settings s=new Settings();
         try{
-Settings s=(Settings)loadObjectFromFile("SettingsValue");
+            Settings s=(Settings)loadObjectFromFile("SettingsValue");
         } catch(Exception e){
             e.printStackTrace();
             
