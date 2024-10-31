@@ -10,6 +10,10 @@ import java.io.ObjectOutputStream;
 import javax.swing.ImageIcon;
 
 public class CustomMethods {
+    /**
+     * @param localPath
+     * @return This method returns the absolute path to the resouces folder/local path
+     */
     public static String getFullPathString(String localPath) {
         return Pet_Simulator.class.getResource(localPath).toString();
     }
@@ -22,6 +26,15 @@ public class CustomMethods {
         return new ImageIcon(getFullPathString(localPath)).getImage();
     }
 
+    /**
+     * @param image
+     * @param width
+     * @param height
+     * @param hint
+     * @return Scales the image to the given height and width.
+     * if hint is Image.SCALE_SMOOTH takes long but gives the best quality
+     * if hint is Image.SCALE_FAST its fast but quality is meh
+     */
     public static Image getScaledImage(Image image, int width, int height, int hint) {
         return image.getScaledInstance(width, height, hint);
     }
