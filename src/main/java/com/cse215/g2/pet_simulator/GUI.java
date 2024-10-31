@@ -100,6 +100,7 @@ public class GUI {
     }
     private static void animate(){
         
+        
     }
     public static void showLayer(Integer layerPosition){
         Component[] components = layeredPane.getComponentsInLayer((int)layerPosition);
