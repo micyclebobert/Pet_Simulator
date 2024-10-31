@@ -6,6 +6,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 public class CustomMethods {
+    //dggvhc
     public static URL getFullPathURL(String localPath) {
         return Pet_Simulator.class.getResource(localPath);
     }
