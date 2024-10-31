@@ -24,6 +24,15 @@ public class Animal {
     String[] MENTAL_HEALTH_STAGE_NAMES = { "Sad", "Okay", "Happy" };
     int[] MENTAL_HEALTH_STAGE_RANGES = { 10, 90 };
 
+    /**
+     * @param array
+     * @param comparator
+     * @return 
+     * Example {10, 90}
+     * return 0 if in between  0 to 10
+     * return 1 if in between 10 to 90
+     * return 2 if above 90+
+     */
     int getIndexFromRange(int[] array, int comparator) {
         for (int i = 0; i < array.length; i++) {
             if (comparator <= array[i]) {
