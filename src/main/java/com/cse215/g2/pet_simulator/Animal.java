@@ -16,7 +16,7 @@ public class Animal {
     //tst
     String[] HUNGER_STATE_NAMES = { "Very Hungry", "Hungry", "Well Fed" };
     int[] HUNGER_STATE_RANGES = { 10, 90 };
-    int totalSumOfHungerWhenFeeding = 50, countOfFeeding = 1; // Since we agv it I'm giving it a starting value (to
+    int totalSumOfHungerWhenFeeding = 50, countOfFeeding = 1; // Since we avg it I'm giving it a starting value (to
                                                               // avoid division by 0 err)
     String[] PHYSICAL_HEALTH_STAGE_NAMES = { "Malnourished", "Fit", "Overweight" };
     int[] PHYSICAL_HEALTH_STAGE_RANGES = { 10, 90 };
