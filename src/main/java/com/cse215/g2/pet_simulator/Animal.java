@@ -4,9 +4,11 @@ public class Animal {
     /*
      * States are temporary, Stages are longer term
      */
+    String name;
     int age = 0;
+
     public static final String[] LIFE_STAGE_NAMES = { "Newborn", "Fledgling", "Prepubesent", "Teenager", "Adult", "Old" };
-    static final int[] LIFE_STAGE_AGE_RANGES = { 2, 4, 8, 20 }; // Range of lifeStages[first] is 0 to
+    public static final int[] LIFE_STAGE_AGE_RANGES = { 2, 4, 8, 10, 20 }; // Range of lifeStages[first] is 0 to
                                                                 // lifeStagesAge[first]
     // Range of lifeStages[second] is (lifeStagesAge[first] + 1) to
     // lifeStagesAge[second]
@@ -14,16 +16,15 @@ public class Animal {
     // infinity
     int currentHungerLevel;
 
-    // tst
-    static final String[] HUNGER_STATE_NAMES = { "Very Hungry", "Hungry", "Well Fed" };
-    static final int[] HUNGER_STATE_RANGES = { 10, 90 };
-    int totalSumOfHungerWhenFeeding = 50, countOfFeeding = 1; // Since we agv it I'm giving it a starting value (to
+    public static final String[] HUNGER_STATE_NAMES = { "Very Hungry", "Hungry", "Well Fed" };
+    public static final int[] HUNGER_STATE_RANGES = { 10, 90 };
+    int totalSumOfHungerWhenFeeding = 50, countOfFeeding = 1; // Since we avg it I'm giving it a starting value (to
                                                               // avoid division by 0 err)
-    static final String[] PHYSICAL_HEALTH_STAGE_NAMES = { "Malnourished", "Fit", "Overweight" };
-    static final int[] PHYSICAL_HEALTH_STAGE_RANGES = { 10, 90 };
+    public static final String[] PHYSICAL_HEALTH_STAGE_NAMES = { "Malnourished", "Fit", "Overweight" };
+    public static final int[] PHYSICAL_HEALTH_STAGE_RANGES = { 10, 90 };
     int toyCount = 0, patCount = 0, sleepCount = 0;
-    static final String[] MENTAL_HEALTH_STAGE_NAMES = { "Sad", "Okay", "Happy" };
-    static final int[] MENTAL_HEALTH_STAGE_RANGES = { 10, 90 };
+    public static final String[] MENTAL_HEALTH_STAGE_NAMES = { "Sad", "Okay", "Happy" };
+    public static final int[] MENTAL_HEALTH_STAGE_RANGES = { 10, 90 };
 
     /**
      * @return
@@ -32,17 +33,21 @@ public class Animal {
      *         return 1 if in between 10 to 90
      *         return 2 if above 90+
      */
-    int getIndexFromRange(int[] array, int comparator) {
-        for (int i = 0; i < array.length; i++) {
-            if (comparator <= array[i]) {
-                return i;
-            }
-        }
-        return array.length - 1;
-    }
 
+
+     
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public int getAge() {
+        return age;
+    }
+    public void updateAge(){age++;}
     public int getCurrentLifeStageIndex() {
-        return getIndexFromRange(LIFE_STAGE_AGE_RANGES, age);
+        return CustomMethods.getIndexFromRange(LIFE_STAGE_AGE_RANGES, age);
     }
 
     public String getCurrentLifeStageName() {
@@ -50,7 +55,7 @@ public class Animal {
     }
 
     public int getCurrentHungerStateIndex() {
-        return getIndexFromRange(HUNGER_STATE_RANGES, currentHungerLevel);
+        return CustomMethods.getIndexFromRange(HUNGER_STATE_RANGES, currentHungerLevel);
     }
 
     public String getCurrentHungerStateName() {
@@ -59,7 +64,7 @@ public class Animal {
 
     public int getCurrentPhysicalHealthStageIndex() {
         int avg = totalSumOfHungerWhenFeeding / countOfFeeding;
-        return getIndexFromRange(PHYSICAL_HEALTH_STAGE_RANGES, avg);
+        return CustomMethods.getIndexFromRange(PHYSICAL_HEALTH_STAGE_RANGES, avg);
     }
 
     public String getCurrentPhysicalHealthStageName() {
@@ -68,7 +73,7 @@ public class Animal {
 
     public int getCurrentMentalHealthStageIndex() {
         int min = Math.min(toyCount, Math.min(patCount, sleepCount));
-        return getIndexFromRange(MENTAL_HEALTH_STAGE_RANGES, min);
+        return CustomMethods.getIndexFromRange(MENTAL_HEALTH_STAGE_RANGES, min);
     }
 
     public String getCurrentMentalHealthStageName() {
@@ -105,14 +110,14 @@ public class Animal {
 
     public static void validateNameAndRangeLengths(String[] nameArray, int[] rangeArray, String nameOfArray) {
         if (nameArray.length - 1 != rangeArray.length) {
-            throw new VerifyError(nameOfArray + "_Names length - 1 does not equal " + nameOfArray + "_Ranges length");
+            throw new VerifyError(nameOfArray + "_NAMES length - 1 does not equal " + nameOfArray + "_RANGES length");
         }
     }
 
     public static void validateRangeArray(int[] rangeArray, String nameOfArray) {
-        CustomMethods.validatePositiveAndSortedArray(rangeArray, nameOfArray + "_Ranges");
+        CustomMethods.validatePositiveAndSortedArray(rangeArray, nameOfArray + "_RANGES");
         if (rangeArray[rangeArray.length - 1] > 100) {
-            throw new VerifyError(rangeArray + "_Ranges[" + (rangeArray.length - 1) + "] is greater than 100");
+            throw new VerifyError(rangeArray + "_RANGES [" + (rangeArray.length - 1) + "] is greater than 100");
         }
     }
 }

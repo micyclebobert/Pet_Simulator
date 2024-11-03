@@ -60,17 +60,19 @@ public class GUI {
 import javax.swing.*;
 import java.awt.*;
 
-public class GUI {    
+public class GameGUI {    
     public static final Integer /**/ BACKGROUND_LAYER_POSITION = (Integer) (0);
     public static final Integer /*      */ TOYS_LAYER_POSITION = (Integer) (1);
     public static final Integer /*       */ PET_LAYER_POSITION = (Integer) (2);
     public static final Integer /*        */ UI_LAYER_POSITION = (Integer) (3);
     public static final Integer /*  */ SETTINGS_LAYER_POSITION = (Integer) (4);
 
+    static boolean continueLoop = true;
+    static JFrame frame;
     static JLayeredPane layeredPane;
     
-    public static void start() {
-        JFrame frame = new JFrame("Full Screen LayeredPane Example");
+    public static void open() {
+        frame = new JFrame("Pet Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         
@@ -79,17 +81,18 @@ public class GUI {
 
         layeredPane = new JLayeredPane();
 
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        layeredPane.setPreferredSize(screenSize);
+        
+        layeredPane.setPreferredSize(CustomMethods.getScreenSize());
 
-        ImageIcon image1 = new ImageIcon(GUI.class.getResource("/test.jpg"));
-        ImageIcon backgroundImage = CustomMethods.getScaledImageIcon("/Background.jpeg", screenSize.width, screenSize.height, Image.SCALE_SMOOTH);
+        ImageIcon image1 = CustomMethods.getImageIconFromLocalPath("/image1");
+        ImageIcon name=CustomMethods.getImageIconFromLocalPath("/image2.jpg");
+        ImageIcon backgroundImage = CustomMethods.getScaledImageIcon("/Background.jpeg", CustomMethods.getScreenWidth(), CustomMethods.getScreenHeight(),Image.SCALE_SMOOTH);
 
         JLabel label1 = new JLabel(image1);
         JLabel backgroundLabel = new JLabel(backgroundImage);
 
         label1.setBounds(0,0, image1.getIconWidth(), image1.getIconHeight());
-        backgroundLabel.setBounds(0, 0, screenSize.width,screenSize.height);
+        backgroundLabel.setBounds(0, 0, CustomMethods.getScreenWidth(),CustomMethods.getScreenHeight());
 
         layeredPane.add(label1, Integer.valueOf(1)); // Lower layer
         layeredPane.add(backgroundLabel, Integer.valueOf(2)); // Higher layer
@@ -97,16 +100,26 @@ public class GUI {
         JLabel textLabel = new JLabel("Full Screen LayeredPane Example", SwingConstants.CENTER);
         textLabel.setFont(new Font("Arial", Font.BOLD, 24));
         textLabel.setForeground(Color.WHITE);
-        textLabel.setBounds(0, 0, screenSize.width, 50);
+        textLabel.setBounds(0, 0, CustomMethods.getScreenWidth(), 50);
         //layeredPane.add(textLabel, Integer.valueOf(3));
 
         frame.add(layeredPane);
         frame.pack();
         frame.setVisible(true);
+        //animate();
     }
     private static void animate(){
-        
-        
+        long nanosecondBetweenFrames=1/Settings.getGameFPS();
+        long lastFrameUpdateTime = System.nanoTime();
+        long currentTime=System.nanoTime();
+        while (continueLoop) {
+            currentTime=System.nanoTime();
+            if(currentTime-lastFrameUpdateTime>=nanosecondBetweenFrames){
+                lastFrameUpdateTime=currentTime;
+                //updateAnimation();
+            }
+        }
+        frame.dispose();
     }
     public static void showLayer(Integer layerPosition){
         Component[] components = layeredPane.getComponentsInLayer((int)layerPosition);
@@ -119,6 +132,10 @@ public class GUI {
         for (Component component : components) {
             component.setVisible(false);
         }
+    }
+    
+    public static void close(){
+        continueLoop=false;
     }
 
 }
