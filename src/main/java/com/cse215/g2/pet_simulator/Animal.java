@@ -5,7 +5,7 @@ public class Animal {
      * States are temporary, Stages are longer term
      */
     int age = 0;
-    static final String[] LIFE_STAGE_NAMES = { "Newborn", "Fledgling", "Prepubesent", "Teenager", "Adult", "Old" };
+    public static final String[] LIFE_STAGE_NAMES = { "Newborn", "Fledgling", "Prepubesent", "Teenager", "Adult", "Old" };
     static final int[] LIFE_STAGE_AGE_RANGES = { 2, 4, 8, 20 }; // Range of lifeStages[first] is 0 to
                                                                 // lifeStagesAge[first]
     // Range of lifeStages[second] is (lifeStagesAge[first] + 1) to
