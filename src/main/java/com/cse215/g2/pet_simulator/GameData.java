@@ -1,15 +1,11 @@
 package com.cse215.g2.pet_simulator;
 
-import java.awt.Image;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 
 public class GameData implements Serializable {
     private ArrayList<Animal> pets;
@@ -37,7 +33,7 @@ public class GameData implements Serializable {
 
     public void saveData() {
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream("c/abcd/defg/i.o6h");
+            FileOutputStream fileOutputStream = new FileOutputStream(CustomMethods.getFullPathString("/save.sf"));
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(this);
             objectOutputStream.close();
@@ -48,9 +44,9 @@ public class GameData implements Serializable {
     }
 
     public GameData loadData(String path) {
-        GameData returnData;
+        GameData returnData = new GameData();
         try {
-            FileInputStream fileInputStream = new FileInputStream("c/t.h86h");
+            FileInputStream fileInputStream = new FileInputStream(CustomMethods.getFullPathString(path));
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             returnData = (GameData) objectInputStream.readObject();
             objectInputStream.close();

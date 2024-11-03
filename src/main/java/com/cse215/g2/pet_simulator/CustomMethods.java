@@ -45,18 +45,19 @@ public class CustomMethods {
     public static void xyCenter(JComponent comp, int width, int height) {
         comp.setBounds(xMiddle(width), yMiddle(height), width, height);
     }
-    
 
     public static void xCenter(JComponent comp, int y) {
         comp.setLocation(xMiddle(comp.getWidth()), y);
     }
+
     public static void yCenter(JComponent comp, int x) {
-        comp.setLocation(x,yMiddle(comp.getHeight()));
+        comp.setLocation(x, yMiddle(comp.getHeight()));
     }
 
     public static void xyCenter(JComponent comp) {
         comp.setLocation(xMiddle(comp.getWidth()), yMiddle(comp.getHeight()));
     }
+
     public static int getIndexFromRange(int[] array, int comparator) {
         for (int i = 0; i < array.length; i++) {
             if (comparator <= array[i]) {
@@ -159,7 +160,6 @@ public class CustomMethods {
     public static boolean isIndexInBounds(int[] array, int index) {
         return index < array.length;
     }
-
 
     public static <T> boolean isIndexInBounds(T[] array, int index) {
         return index < array.length;

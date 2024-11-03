@@ -109,7 +109,7 @@ public class GameGUI {
         //animate();
     }
     private static void animate(){
-        long nanosecondBetweenFrames=1/Settings.getGameFPS();
+        long nanosecondBetweenFrames=1 /Settings.getGameFPS();
         long lastFrameUpdateTime = System.nanoTime();
         long currentTime=System.nanoTime();
         while (continueLoop) {
