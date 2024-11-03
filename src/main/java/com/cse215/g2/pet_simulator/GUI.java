@@ -60,7 +60,13 @@ public class GUI {
 import javax.swing.*;
 import java.awt.*;
 
-public class GUI {
+public class GUI {    
+    public static final Integer /**/ BACKGROUND_LAYER_POSITION = (Integer) (0);
+    public static final Integer /*      */ TOYS_LAYER_POSITION = (Integer) (1);
+    public static final Integer /*       */ PET_LAYER_POSITION = (Integer) (2);
+    public static final Integer /*        */ UI_LAYER_POSITION = (Integer) (3);
+    public static final Integer /*  */ SETTINGS_LAYER_POSITION = (Integer) (4);
+
     static JLayeredPane layeredPane;
     
     public static void start() {

@@ -6,14 +6,13 @@ public class Pet_Simulator {
     // then cancel the current and start new
     // Actions update variables after it is over
     public static void main(String[] args) {
-        Validate();
+        validateClasses();
         GUI.start();
         Animal a = new Animal();
         System.out.println("Hello World!" + a.age);
     }
 
-    public static void Validate() {
-        //
-
+    public static void validateClasses() {
+        Animal.validateClass();
     }
 }
