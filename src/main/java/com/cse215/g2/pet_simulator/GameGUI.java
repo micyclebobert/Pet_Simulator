@@ -67,12 +67,12 @@ public class GameGUI {
     public static final Integer /*        */ UI_LAYER_POSITION = (Integer) (3);
     public static final Integer /*  */ SETTINGS_LAYER_POSITION = (Integer) (4);
 
-    static boolean continueLoop = true;
-    static JFrame frame;
-    static JLayeredPane layeredPane;
+    private static boolean continueLoop = true;
+    private static JFrame frame;
+    private static JLayeredPane layeredPane;
     
     public static void open() {
-        JFrame frame = new JFrame("Pet Simulator");
+        frame = new JFrame("Pet Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         
@@ -120,7 +120,7 @@ public class GameGUI {
                 //updateAnimation();
             }
         }
-        frame.dispose();
+        //frame.dispose();
     }
     public static void showLayer(Integer layerPosition){
         Component[] components = layeredPane.getComponentsInLayer((int)layerPosition);

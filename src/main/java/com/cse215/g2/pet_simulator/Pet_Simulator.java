@@ -9,7 +9,7 @@ public class Pet_Simulator {
     public static GameData gameData;
     public static void main(String[] args) {
         validateClasses();
-        GameGUI.open();
+        MainMenu.open();
         Thread _GUI = new Thread(new GUIManager());
         //Thread audio = new Thread();
         Thread behaviour = new Thread(new PetBehaviour());
