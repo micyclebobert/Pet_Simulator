@@ -4,9 +4,7 @@ public class GUIManager implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            System.out.println("GUI");
-        }
+        GameGUI.open();
         //MainMenu.open();
         
     }

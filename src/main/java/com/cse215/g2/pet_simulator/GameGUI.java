@@ -72,7 +72,7 @@ public class GameGUI {
     static JLayeredPane layeredPane;
     
     public static void open() {
-        frame = new JFrame("Pet Simulator");
+        JFrame frame = new JFrame("Pet Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         
@@ -84,8 +84,8 @@ public class GameGUI {
         
         layeredPane.setPreferredSize(CustomMethods.getScreenSize());
 
-        ImageIcon image1 = CustomMethods.getImageIconFromLocalPath("/image1");
-        ImageIcon name=CustomMethods.getImageIconFromLocalPath("/image2.jpg");
+        ImageIcon image1 = CustomMethods.getImageIconFromLocalPath("/Background.jpeg");
+        ImageIcon name=CustomMethods.getImageIconFromLocalPath("/Background.jpeg");
         ImageIcon backgroundImage = CustomMethods.getScaledImageIcon("/Background.jpeg", CustomMethods.getScreenWidth(), CustomMethods.getScreenHeight(),Image.SCALE_SMOOTH);
 
         JLabel label1 = new JLabel(image1);
@@ -105,6 +105,7 @@ public class GameGUI {
 
         frame.add(layeredPane);
         frame.pack();
+        System.out.println("here");
         frame.setVisible(true);
         //animate();
     }
