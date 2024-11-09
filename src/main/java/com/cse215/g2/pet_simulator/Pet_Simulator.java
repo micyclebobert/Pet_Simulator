@@ -16,7 +16,7 @@ public class Pet_Simulator {
         _GUI.start();
         behaviour.start();
         Animal a = new Animal();
-        System.out.println("Hello World!" + a.age);
+        System.out.println("Hello World!" + a.getAge());
     }
 
     public static void validateClasses() {

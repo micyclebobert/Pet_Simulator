@@ -88,40 +88,40 @@ public class CustomMethods {
      * Creates a new {@code Image} object with the specified {@code width} and
      * {@code height} from the given {@code image}
      */
-    public static Image getScaledImage(Image image, int width, int height, int hint) {
-        return image.getScaledInstance(width, height, hint);
+    public static Image getScaledImage(Image image, int width, int height, int processUsing) {
+        return image.getScaledInstance(width, height, processUsing);
     }
 
     /**
      * Creates a new {@code Image} object with the specified {@code width} and
      * {@code height} from the given {@code localPath}
      */
-    public static Image getScaledImage(String localPath, int width, int height, int hint) {
-        return getImageFromLocalPath(localPath).getScaledInstance(width, height, hint);
+    public static Image getScaledImage(String localPath, int width, int height, int processUsing) {
+        return getImageFromLocalPath(localPath).getScaledInstance(width, height, processUsing);
     }
 
     /**
      * Creates a new {@code Image} object with the specified {@code width} and
      * {@code height} from the given {@code imageIcon}
      */
-    public static Image getScaledImage(ImageIcon imageIcon, int width, int height, int hint) {
-        return getScaledImage(imageIcon.getImage(), width, height, hint);
+    public static Image getScaledImage(ImageIcon imageIcon, int width, int height, int processUsing) {
+        return getScaledImage(imageIcon.getImage(), width, height, processUsing);
     }
 
     /**
      * Creates a new {@code ImageIcon} object with the specified {@code width} and
      * {@code height} from the given {@code localPath}
      */
-    public static ImageIcon getScaledImageIcon(String localPath, int width, int height, int hint) {
-        return new ImageIcon(getScaledImage(getImageIconFromLocalPath(localPath), width, height, hint));
+    public static ImageIcon getScaledImageIcon(String localPath, int width, int height, int processUsing) {
+        return new ImageIcon(getScaledImage(getImageIconFromLocalPath(localPath), width, height, processUsing));
     }
 
     /**
      * Creates a new {@code ImageIcon} object with the specified {@code width} and
      * {@code height} from the given {@code imageIcon}
      */
-    public static ImageIcon getScaledImageIcon(ImageIcon imageIcon, int width, int height, int hint) {
-        return new ImageIcon(getScaledImage(imageIcon, width, height, hint));
+    public static ImageIcon getScaledImageIcon(ImageIcon imageIcon, int width, int height, int processUsing) {
+        return new ImageIcon(getScaledImage(imageIcon, width, height, processUsing));
     }
 
     /**

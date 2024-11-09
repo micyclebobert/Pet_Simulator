@@ -4,8 +4,8 @@ public class Animal {
     /*
      * States are temporary, Stages are longer term
      */
-    String name;
-    int age = 0;
+    private String name;
+    private int age = 0;
 
     public static final String[] LIFE_STAGE_NAMES = { "Newborn", "Fledgling", "Prepubesent", "Teenager", "Adult", "Old" };
     public static final int[] LIFE_STAGE_AGE_RANGES = { 2, 4, 8, 10, 20 }; // Range of lifeStages[first] is 0 to
@@ -14,15 +14,15 @@ public class Animal {
     // lifeStagesAge[second]
     // Range of lifeStages[last] is (lifeStagesAge[last] + 1) to
     // infinity
-    int currentHungerLevel;
+    private int currentHungerLevel;
 
     public static final String[] HUNGER_STATE_NAMES = { "Very Hungry", "Hungry", "Well Fed" };
     public static final int[] HUNGER_STATE_RANGES = { 10, 90 };
-    int totalSumOfHungerWhenFeeding = 50, countOfFeeding = 1; // Since we avg it I'm giving it a starting value (to
+    private int totalSumOfHungerWhenFeeding = 50, countOfFeeding = 1; // Since we avg it I'm giving it a starting value (to
                                                               // avoid division by 0 err)
     public static final String[] PHYSICAL_HEALTH_STAGE_NAMES = { "Malnourished", "Fit", "Overweight" };
     public static final int[] PHYSICAL_HEALTH_STAGE_RANGES = { 10, 90 };
-    int toyCount = 0, patCount = 0, sleepCount = 0;
+    private int toyCount = 0, patCount = 0, sleepCount = 0;
     public static final String[] MENTAL_HEALTH_STAGE_NAMES = { "Sad", "Okay", "Happy" };
     public static final int[] MENTAL_HEALTH_STAGE_RANGES = { 10, 90 };
 
