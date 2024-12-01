@@ -3,31 +3,12 @@ package com.cse215.g2.pet_simulator;
 import java.awt.Toolkit;
 
 public class Pet_Simulator {
-    // Background, Toys, Pet, Action, UI
-    // If action is going on and new action
-    // then cancel the current and start new
-    // Actions update variables after it is over
     public static GameData gameData;
 
     public static void main(String[] args) {
         initialize();
-        Animal a = new Animal("l");
-        // MainMenu.open();
-        Thread _GUI = new Thread(new GUIManager());
-        // Thread audio = new Thread();
+        Thread _GUI = new Thread(new Manager());
         _GUI.start();
-        // behaviour.start();
-        System.out.println("Hello World!" + a.getAge());
-    }
-    
-    public static void validateClasses() {
-        Animal.validateClass();
-    }
-
-    public static void workPls(Animal a){
-        a.sicknessEvent();
-        new GameGUI(a);
-
     }
 
     
@@ -35,7 +16,6 @@ public class Pet_Simulator {
      * These are the things that must happen right after the game starts
      */
     public static void initialize() {
-        validateClasses();
         Custom.setScreenSize(Toolkit.getDefaultToolkit().getScreenSize());
     }
 }

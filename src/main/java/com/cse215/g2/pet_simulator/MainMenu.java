@@ -1,11 +1,13 @@
 package com.cse215.g2.pet_simulator;
 
-
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
-public class MainMenu {
+public class MainMenu  extends Menu {
     /*
      * private static JButton newGame=new JButton("New Game");
      * private static JButton continueGame=new JButton("Continue Game");
@@ -18,32 +20,49 @@ public class MainMenu {
         setup();
     }
 
-    @SuppressWarnings("unused")
     public void setup() {
+        frame = new FullSceenFrame(false);
+        JLabel textLabel = new JLabel("Pet Simulator", SwingConstants.CENTER);
+        textLabel.setFont(new Font("Arial", Font.BOLD, 70));
+        textLabel.setForeground(Color.WHITE);
+        textLabel.setBounds(0, 100, Custom.getScreenWidth(), 200);
+        frame.add(textLabel);
 
-        JButton newGame = new JButton("New Game");
-        JButton loadGame = new JButton("Load Game");
-        JButton settings = new JButton("Settings");
-        JButton exit = new JButton("Exit");
-        Custom.xCenter(newGame, 500, 100, 30);
-        Custom.xCenter(loadGame, 600, 100, 30);
-        Custom.xCenter(settings, 700, 100, 30);
-        Custom.xCenter(exit, 800, 100, 30);
-        newGame.addActionListener(e -> newGame());
-        exit.addActionListener(e -> Custom.exit(0));
-        frame = new FullSceenFrame("Pet Simulator");
-        frame.setOpacity(1);
-        frame.setBackground(Color.BLACK);
-        frame.add(newGame);
-        frame.add(exit);
+        JButton newGameButton = new JButton("New Game");
+        JButton loadGameButton = new JButton("Load Game");
+        JButton settingsButton = new JButton("Settings");
+        JButton exitButton = new JButton("Exit");
+        newGameButton.setSize(100, 30);
+        loadGameButton.setSize(100, 30);
+        settingsButton.setSize(100, 30);
+        exitButton.setSize(100, 30);
+        Custom.setPercentY(newGameButton, 50);
+        Custom.setPercentY(loadGameButton, 60);
+        Custom.setPercentY(settingsButton, 70);
+        Custom.setPercentY(exitButton, 80);
+        Custom.xCenter(newGameButton);
+        Custom.xCenter(loadGameButton);
+        Custom.xCenter(settingsButton);
+        Custom.xCenter(exitButton);
+        newGameButton.addActionListener(_ -> newGame());
+        loadGameButton.addActionListener(_ -> loadGame());
+        settingsButton.addActionListener(_ -> openSettings());
+        exitButton.addActionListener(_ -> Custom.exit(1));
+        frame.add(newGameButton);
+        frame.add(loadGameButton);
+        frame.add(settingsButton);
+        frame.add(exitButton);
         open();
     }
 
     public void open() {
+        Manager.setMenuType(1);
         frame.setVisible(true);
+        Manager.closePrevious();
     }
 
     public void close() {
+        Manager.setMenuType(0);
         frame.setVisible(false);
         frame.dispose();
     }
@@ -51,5 +70,16 @@ public class MainMenu {
     public void newGame() {
         close();
         new SelectionMenu();
+    }
+
+    public void loadGame() {
+        Manager.loadPet();
+        close();
+        new GameGUI();
+    }
+
+    public void openSettings() {
+        close();
+        new SettingsMenu();
     }
 }

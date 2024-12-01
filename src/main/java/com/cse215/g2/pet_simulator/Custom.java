@@ -53,6 +53,14 @@ public class Custom {
         comp.setBounds(xMiddle(width), yMiddle(height), width, height);
     }
 
+    public static void xCenter(JComponent comp) {
+        setX(comp, xMiddle(comp.getWidth()));
+    }
+
+    public static void yCenter(JComponent comp) {
+        setY(comp, yMiddle(comp.getHeight()));
+    }
+
     public static void xCenter(JComponent comp, int y) {
         comp.setLocation(xMiddle(comp.getWidth()), y);
     }
@@ -160,9 +168,6 @@ public class Custom {
      * @return This method returns the absolute path to the resouces folder/local
      *         path
      */
-    public static String getFullPathString(String localPath) {
-        return Pet_Simulator.class.getResource(localPath).toString();
-    }
 
     public static URL getFullPathURL(String localPath) {
         return Pet_Simulator.class.getResource(localPath);
@@ -220,23 +225,6 @@ public class Custom {
      * Makes sure that the {@code array} is sorted and only contains positive
      * integers.
      */
-    public static void validatePositiveAndSortedArray(int[] array, String nameOfArray) {
-        if (array[0] <= 0) {
-            throw new VerifyError(array + "[0] is not positive");
-        }
-        for (int i = 1; i < array.length; i++) {
-            if (array[i - 1] > array[i]) {
-                throw new VerifyError(array + "[" + (i - 1) + "] is greater than " + array + "[" + i + "]");
-            }
-        }
-    }
-
-    public static void valdateIndexIsInBounds(int[] array, int index, String nameOfArray) {
-        if (index >= array.length)
-            throw new VerifyError("index " + index + " is out of bounds for " + nameOfArray + ". " + nameOfArray
-                    + " length is " + array.length);
-    }
-
     public boolean isArraySortedAndPositive(int[] array, String nameOfArray) {
         if (array[0] <= 0) {
             return false;
@@ -261,11 +249,20 @@ public class Custom {
         return index < array.size();
     }
 
-    public static void exit() {
-        System.exit(0);
+    public static String[] intArrayToStringArray(int... array) {
+        String[] stringArray = new String[array.length];
+        for (int i = 0; i < stringArray.length; i++) {
+            stringArray[i] = "" + array[i];
+
+        }
+        return stringArray;
     }
 
     public static void exit(int status) {
+        if (Manager.getMenuType()==2) {
+            GameGUI.endThreads();
+            new GameData(Manager.getPet()).saveData();
+        }
         System.exit(status);
     }
 

@@ -3,11 +3,9 @@ package com.cse215.g2.pet_simulator;
 import java.awt.Color;
 import java.awt.Font;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
-public class SelectionMenu {
+public class SelectionMenu extends Menu {
     private FullSceenFrame frame;
 
     public SelectionMenu() {
@@ -16,14 +14,12 @@ public class SelectionMenu {
 
     public void setup() {
         frame = new FullSceenFrame();
-        frame.setLayout(null);
-        frame.setBackground(Color.BLUE);
-        System.out.println("selectionPanel.getBounds() = " + frame.getBounds());
-        JLabel text = new JLabel("Select Pet");
-        text.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 24));
+        JLabel text = new JLabel("About us:");
+        text.setForeground(Color.WHITE);
+        text.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
         text.setSize(150, 50);
-        text.setLocation(20, 20);
-        PetSelectionButton cat = new PetSelectionButton("Cat", "/Cat.jpg", 100, e -> startGame());
+        text.setLocation(40, 40);
+        PetSelectionButton cat = new PetSelectionButton("Cat", "/Cat.jpg", 100, _ -> startGame());
         frame.add(cat);
         frame.add(text);
         open();
@@ -31,14 +27,13 @@ public class SelectionMenu {
 
     public void startGame() {
         close();
-        Animal a = new Animal(JOptionPane.showInputDialog("Input Pet Name"));
-        // Pet_Simulator.workPls(a);
-        // new Thread(new GameGUI(a));
-        new GameGUI(a);
+        Manager.setPet(Animal.askForNew());
+        new GameGUI();
     }
 
     public void open() {
         frame.setVisible(true);
+        Manager.closePrevious();
     }
 
     public void close() {

@@ -9,6 +9,7 @@ public class TextDisplay extends JTextArea {
         this.setWrapStyleWord(true);
         this.setOpaque(false);
         this.setEditable(false);
+        this.setFocusable(false);
     }
 
     public TextDisplay(String textToDisplay) {

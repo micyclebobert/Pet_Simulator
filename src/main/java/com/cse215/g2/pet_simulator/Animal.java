@@ -1,8 +1,10 @@
 package com.cse215.g2.pet_simulator;
 
+import java.io.Serializable;
+
 import javax.swing.JOptionPane;
 
-public class Animal {
+public class Animal implements Serializable{
     /*
      * States are temporary, Stages are longer term
      */
@@ -17,18 +19,29 @@ public class Animal {
     // lifeStagesAge[second]
     // Range of lifeStages[last] is (lifeStagesAge[last] + 1) to
     // infinity
-    private int currentHungerLevel;
+    private int currentHungerLevel = 50;
 
     public static final String[] HUNGER_STATE_NAMES = { "Very Hungry", "Hungry", "Well Fed" };
     public static final int[] HUNGER_STATE_RANGES = { 10, 90 };
-    private int totalSumOfHungerWhenFeeding = 50, countOfFeeding = 1; // Since we avg it I'm giving it a starting value
-    // (to
-    // avoid division by 0 err)
+    private int totalSumOfHungerWhenFeeding = 50;
+    private int countOfFeeding = 1; // Since we avg it I'm giving it a starting value
+    // (to avoid division by 0 err)
     public static final String[] PHYSICAL_HEALTH_STAGE_NAMES = { "Malnourished", "Fit", "Overweight" };
     public static final int[] PHYSICAL_HEALTH_STAGE_RANGES = { 10, 90 };
-    private int toyCount = 0, patCount = 0, sleepCount = 0;
+    private int currentHappinessLevel = 50;
+
+    public static final String[] HAPPINESS_STATE_NAMES = { "Depressed", "Balanaced", "Moody" };
+    public static final int[] HAPPINESS_STATE_RANGES = { 10, 90 };
+    private int totalSumOfHappinessWhenPatting = 50; // Since we avg it I'm giving it a starting value
+    private int patCount = 1;
+    // (to avoid division by 0 err)
+    // private int toyCount = 0;
+    // private int sleepCount = 0;
     public static final String[] MENTAL_HEALTH_STAGE_NAMES = { "Sad", "Okay", "Happy" };
     public static final int[] MENTAL_HEALTH_STAGE_RANGES = { 10, 90 };
+    
+    public static final String TRIVIAS[][] = { { "What is the capital of Japan", "Tokyo" },
+    { "What am I thinking right now?", "Nothing" } };
 
     public String getName() {
         return name;
@@ -45,9 +58,7 @@ public class Animal {
     }
 
     public void sicknessEvent() {
-        String options[][] = { { "What is the capital of Japan", "Tokyo" },
-                { "What am I thinking right now?", "Nothing" } };
-        String[] random = Custom.getRandom(options);
+        String[] random = Custom.getRandom(TRIVIAS);
         String answer = "";
         while (!answer.trim().equalsIgnoreCase(random[1])) {
             answer = JOptionPane.showInputDialog(random[0]);
@@ -80,8 +91,10 @@ public class Animal {
     }
 
     public int getCurrentMentalHealthStageIndex() {
-        int min = Math.min(toyCount, Math.min(patCount, sleepCount));
-        return Custom.getIndexFromRange(MENTAL_HEALTH_STAGE_RANGES, min);
+        // int min = Math.min(toyCount, Math.min(patCount, sleepCount));
+        // return Custom.getIndexFromRange(MENTAL_HEALTH_STAGE_RANGES, min);
+        int avg = totalSumOfHappinessWhenPatting / patCount;
+        return Custom.getIndexFromRange(MENTAL_HEALTH_STAGE_RANGES, avg);
     }
 
     public String getCurrentMentalHealthStageName() {
@@ -92,16 +105,42 @@ public class Animal {
         return currentHungerLevel;
     }
 
-    public void setCurrentHungerLevel(int newCurrentHungerLevel) {
-        currentHungerLevel = newCurrentHungerLevel <= 100 ? newCurrentHungerLevel : 100;
+    private void incrementCurrentHungerLevel() {
+        int newCurrentHungerLevel = currentHungerLevel + 50;
+        currentHungerLevel = newCurrentHungerLevel < 100 ? newCurrentHungerLevel : 100;
     }
 
-    public void IncrementCurrentHungerLevel() {
-        currentHungerLevel = currentHungerLevel <= 100 ? currentHungerLevel + 1 : 100;
+    public void DecrementCurrentHungerLevel() {
+        currentHungerLevel = currentHungerLevel > 0 ? currentHungerLevel - 1 : 0;
+    }
+
+    public int getCurrentHappinessLevel() {
+        return currentHappinessLevel;
+    }
+
+    private void incrementCurrentHappinessLevel() {
+        int newCurrentHappinessLevel = currentHappinessLevel + 50;
+        currentHappinessLevel = newCurrentHappinessLevel < 100 ? newCurrentHappinessLevel : 100;
+    }
+
+    public void DecrementCurrentHappinessLevel() {
+        currentHappinessLevel = currentHappinessLevel > 0 ? currentHappinessLevel - 1 : 0;
     }
 
     public void pat() {
         patCount++;
+        totalSumOfHappinessWhenPatting += currentHappinessLevel;
+        incrementCurrentHappinessLevel();
+    }
+
+    public void feed() {
+        countOfFeeding++;
+        totalSumOfHungerWhenFeeding += currentHungerLevel;
+        incrementCurrentHungerLevel();
+    }
+
+    public static Animal askForNew() {
+        return new Animal(JOptionPane.showInputDialog("Input new pet name"));
     }
 
     public static void validateClass() {
@@ -123,7 +162,6 @@ public class Animal {
     }
 
     public static void validateRangeArray(int[] rangeArray, String nameOfArray) {
-        Custom.validatePositiveAndSortedArray(rangeArray, nameOfArray + "_RANGES");
         if (rangeArray[rangeArray.length - 1] > 100) {
             throw new VerifyError(rangeArray + "_RANGES [" + (rangeArray.length - 1) + "] is greater than 100");
         }

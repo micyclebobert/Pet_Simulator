@@ -1,18 +1,23 @@
 package com.cse215.g2.pet_simulator;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import javax.swing.JFileChooser;
+
 public class GameData implements Serializable {
     private Animal pet;
-    private Settings settings;
+    private static JFileChooser fileChooser = new JFileChooser();
 
     public GameData() {
-        // pet = new Animal();
-        settings = new Settings();
+    }
+
+    public GameData(Animal pet) {
+        this.pet = pet;
     }
 
     public Animal getPet() {
@@ -21,20 +26,24 @@ public class GameData implements Serializable {
 
     public void saveData() {
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(Custom.getFullPathString("/save.sf"));
+            fileChooser.setSelectedFile(new File(pet.getName()+".sf"));//Recommends a name
+            fileChooser.showSaveDialog(null);
+            FileOutputStream fileOutputStream = new FileOutputStream(fileChooser.getSelectedFile().getAbsolutePath());
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(this);
             objectOutputStream.close();
             fileOutputStream.close();
         } catch (Exception e) {
             System.out.println("error saving");
+            e.printStackTrace();
         }
     }
 
-    public GameData loadData(String path) {
-        GameData returnData = new GameData();
+    public GameData loadData() {
         try {
-            FileInputStream fileInputStream = new FileInputStream(Custom.getFullPathString(path));
+            GameData returnData;
+            fileChooser.showOpenDialog(null);
+            FileInputStream fileInputStream = new FileInputStream(fileChooser.getSelectedFile().getAbsolutePath());
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             returnData = (GameData) objectInputStream.readObject();
             objectInputStream.close();
@@ -42,7 +51,8 @@ public class GameData implements Serializable {
             return returnData;
         } catch (Exception e) {
             System.out.println("error loading");
-            return new GameData();
+            e.printStackTrace();
+            return new GameData(Animal.askForNew());
         }
     }
     /*
