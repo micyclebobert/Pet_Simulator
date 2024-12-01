@@ -26,9 +26,8 @@ public class SelectionMenu extends Menu {
     }
 
     public void startGame() {
-        close();
         Manager.setPet(Animal.askForNew());
-        new GameGUI();
+        Manager.setMenu(new GameGUI());
     }
 
     public void open() {

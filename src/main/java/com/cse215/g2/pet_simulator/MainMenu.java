@@ -68,18 +68,18 @@ public class MainMenu  extends Menu {
     }
 
     public void newGame() {
-        close();
-        new SelectionMenu();
+        // close();
+        Manager.setMenu(new SelectionMenu());
     }
 
     public void loadGame() {
         Manager.loadPet();
-        close();
-        new GameGUI();
+        // close();
+        Manager.setMenu(new GameGUI());
     }
 
     public void openSettings() {
-        close();
-        new SettingsMenu();
+        // close();
+        Manager.setMenu(new SettingsMenu());
     }
 }

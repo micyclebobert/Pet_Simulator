@@ -16,7 +16,20 @@ public class Manager implements Runnable {
     }
 
     private static Menu menu;
-    private static Menu previousMenu;
+    private static Menu previousMenu = new Menu() {
+
+        @Override
+        void setup() {
+        }
+
+        @Override
+        void open() {
+        }
+
+        @Override
+        void close() {
+        }
+    }; //initializing useless value so that it doesn't cause issue later
 
     public static Menu getMenu() {
         return menu;
@@ -28,6 +41,7 @@ public class Manager implements Runnable {
     }
 
     public static void closePrevious() {
+        System.out.println("closed");
         if (previousMenu != null)
             previousMenu.close();
     }
@@ -48,7 +62,7 @@ public class Manager implements Runnable {
 
     @Override
     public void run() {
-        new MainMenu();
+        setMenu(new MainMenu());
     }
 
 }
