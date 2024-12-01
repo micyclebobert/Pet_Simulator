@@ -68,11 +68,21 @@ public class GameGUI {
     public static final Integer /*        */ UI_LAYER_POSITION = (Integer) (3);
     public static final Integer /*  */ SETTINGS_LAYER_POSITION = (Integer) (4);
 
-    private volatile FullSceenFrame frame;
-    private JLayeredPane layeredPane;
-    private Animal pet;
-    private Thread behaviour = new Thread(new PetBehaviour());
-    private Thread loop = new Thread(new GUIUpdateLoop());
+    private static FullSceenFrame frame;
+    private static JLayeredPane layeredPane;
+    private static JProgressBar happinessBar;
+    private static JProgressBar hungerBar;
+    private static Animal pet;
+    private static Thread behaviour = new Thread(new PetBehaviour());
+    private static Thread loop = new Thread(new GUIUpdateLoop());
+
+    public static void setHappiness(int percentage) {
+        happinessBar.setValue(percentage);
+    }
+
+    public static void setHunger(int percentage) {
+        hungerBar.setValue(percentage);
+    }
 
     /*
      * TO DO
@@ -84,16 +94,16 @@ public class GameGUI {
      * custom type specifier like 1f 3l etc
      */
     public GameGUI(Animal pet) {
-        this.pet = pet;
-        //TODO 
-        if(this.pet==null)this.pet= new Animal("A");
+        GameGUI.pet = pet;
+        // TODO
+        if (GameGUI.pet == null)
+            GameGUI.pet = new Animal("A");
         setup();
     }
 
     public void open() {
         System.out.println("new game");
         frame.setVisible(true);
-        frame.repaint();
         frame.revalidate();
         frame.repaint();
         loop();
@@ -150,7 +160,7 @@ public class GameGUI {
         Custom.setYFromBottom(feedPetButton, 10);
         layeredPane.add(feedPetButton, UI_LAYER_POSITION);
 
-        JProgressBar hungerBar = new JProgressBar(0, 100);
+        hungerBar = new JProgressBar(0, 100);
         hungerBar.setSize(150, 20);
         Custom.setPercentLocation(hungerBar, 1, 50);
         hungerBar.setString("Hunger");
@@ -160,7 +170,7 @@ public class GameGUI {
         hungerBar.setValue(0);
         layeredPane.add(hungerBar, UI_LAYER_POSITION);
 
-        JProgressBar happinessBar = new JProgressBar(0, 100);
+        happinessBar = new JProgressBar(0, 100);
         happinessBar.setSize(150, 20);
         Custom.setPercentLocation(happinessBar, 1, 55);
         happinessBar.setString("Happiness");
