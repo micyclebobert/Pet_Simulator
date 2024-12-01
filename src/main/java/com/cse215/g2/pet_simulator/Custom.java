@@ -77,7 +77,7 @@ public class Custom {
     }
 
     public static void setXFromRight(JComponent comp, int right) {
-        setX(comp, getScreenWidth() - comp.getWidth() - right - 1);
+        setX(comp, getScreenWidth() - comp.getWidth() - right);
     }
 
     public static void setYFromBottom(JComponent comp, int bottom) {

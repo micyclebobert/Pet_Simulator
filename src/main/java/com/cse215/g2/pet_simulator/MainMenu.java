@@ -25,20 +25,19 @@ public class MainMenu {
     public void setup() {
 
         JButton newGame = new JButton("New Game");
-        JButton continueGame = new JButton("Continue Game");
         JButton loadGame = new JButton("Load Game");
         JButton settings = new JButton("Settings");
         JButton exit = new JButton("Exit");
         Custom.xCenter(newGame, 500, 100, 30);
-        Custom.xCenter(continueGame, 550, 100, 30);
         Custom.xCenter(loadGame, 600, 100, 30);
-        Custom.xCenter(settings, 650, 100, 30);
-        Custom.xCenter(exit, 700, 100, 30);
+        Custom.xCenter(settings, 700, 100, 30);
+        Custom.xCenter(exit, 800, 100, 30);
         newGame.addActionListener(e -> newGame());
         exit.addActionListener(e -> Custom.exit(0));
         frame = new FullSceenFrame("Pet Simulator");
         frame.setOpacity(1);
         frame.setBackground(Color.BLACK);
+        frame.add(new CloseButton());
         frame.add(newGame);
         frame.add(exit);
         open();
@@ -49,15 +48,14 @@ public class MainMenu {
     }
 
     public void close() {
-        // frame.dispose();
         frame.setVisible(false);
+        frame.dispose();
     }
 
     public void newGame() {
+        close();
         FullSceenFrame selectionPanel = new FullSceenFrame();
         selectionPanel.setLayout(null);
-        // Custom.setPercentSize(selectionPanel, 50, 50);
-        // Custom.xyCenter(selectionPanel);
         selectionPanel.setBackground(Color.BLUE);
         selectionPanel.setVisible(true);
         System.out.println("selectionPanel.getBounds() = " + selectionPanel.getBounds());
@@ -66,9 +64,6 @@ public class MainMenu {
         b.setLocation(0, 0);
         // frame.removeAll();
         selectionPanel.add(b);
-        frame.add(selectionPanel);
-        frame.revalidate();
-        frame.repaint();
         // close();
         // GameGUI.open();
     }
