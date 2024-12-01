@@ -1,9 +1,5 @@
 package com.cse215.g2.pet_simulator;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import java.awt.Color;
 
@@ -22,6 +18,7 @@ public class MainMenu {
         setup();
     }
 
+    @SuppressWarnings("unused")
     public void setup() {
 
         JButton newGame = new JButton("New Game");
@@ -37,7 +34,6 @@ public class MainMenu {
         frame = new FullSceenFrame("Pet Simulator");
         frame.setOpacity(1);
         frame.setBackground(Color.BLACK);
-        frame.add(new CloseButton());
         frame.add(newGame);
         frame.add(exit);
         open();
@@ -54,17 +50,6 @@ public class MainMenu {
 
     public void newGame() {
         close();
-        FullSceenFrame selectionPanel = new FullSceenFrame();
-        selectionPanel.setLayout(null);
-        selectionPanel.setBackground(Color.BLUE);
-        selectionPanel.setVisible(true);
-        System.out.println("selectionPanel.getBounds() = " + selectionPanel.getBounds());
-        JLabel b = new JLabel("Select Pet");
-        b.setSize(50, 50);
-        b.setLocation(0, 0);
-        // frame.removeAll();
-        selectionPanel.add(b);
-        // close();
-        // GameGUI.open();
+        new SelectionMenu();
     }
 }

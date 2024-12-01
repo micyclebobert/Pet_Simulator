@@ -69,8 +69,9 @@ public class GameGUI {
     public static final Integer /*  */ SETTINGS_LAYER_POSITION = (Integer) (4);
 
     private volatile boolean continueLoop = true;
-    private JFrame frame;
+    private FullSceenFrame frame;
     private JLayeredPane layeredPane;
+    private Animal pet;
     private Thread behaviour = new Thread(new PetBehaviour());
 
     /*
@@ -82,11 +83,11 @@ public class GameGUI {
      * Pet button, buy button, pause, exit
      * custom type specifier like 1f 3l etc
      */
-    public GameGUI() {
+    public GameGUI(Animal pet) {
+        this.pet = pet;
         setup();
-        open();
     }
-
+    
     public void open() {
         System.out.println("new game");
         frame.setVisible(true);
@@ -94,10 +95,10 @@ public class GameGUI {
         behaviour.start();
         loop();
     }
-
+    
     public void setup() {
         continueLoop = true;
-        frame = new JFrame("Pet Simulator");
+        frame = new FullSceenFrame("Pet Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);// Set the frame to full screen
@@ -105,13 +106,13 @@ public class GameGUI {
         frame.setLayout(null);
 
         layeredPane = new JLayeredPane();
-
+        
         layeredPane.setSize(Custom.getScreenSize());
-
+        
         ImageIcon image1 = Custom.getImageIconFromLocalPath("/Background.jpeg");
         ImageIcon backgroundImage = Custom.getScaledImageIcon("/Background.jpeg", Custom.getScreenWidth(),
                 Custom.getScreenHeight(), Image.SCALE_SMOOTH);
-
+                
         JLabel label1 = new JLabel(image1);
         JLabel backgroundLabel = new JLabel(backgroundImage);
 
@@ -121,7 +122,7 @@ public class GameGUI {
         // layeredPane.add(label1, Integer.valueOf(1)); // Lower layer
         layeredPane.add(backgroundLabel, BACKGROUND_LAYER_POSITION); // Higher layer
 
-        JLabel textLabel = new JLabel("Full Screen LayeredPane Example", SwingConstants.CENTER);
+        JLabel textLabel = new JLabel(pet.getName(), SwingConstants.CENTER);
         textLabel.setFont(new Font("Arial", Font.BOLD, 24));
         textLabel.setForeground(Color.WHITE);
         textLabel.setBounds(0, 0, Custom.getScreenWidth(), 50);
@@ -144,13 +145,13 @@ public class GameGUI {
         Custom.setPercentX(buyToysButton, 40);
         Custom.setYFromBottom(buyToysButton, 10);
         layeredPane.add(buyToysButton, UI_LAYER_POSITION);
-
+        
         JButton feedPetButton = new JButton("Feed Pet");
         feedPetButton.setSize(100, 20);
         Custom.setPercentX(feedPetButton, 60);
         Custom.setYFromBottom(feedPetButton, 10);
         layeredPane.add(feedPetButton, UI_LAYER_POSITION);
-
+        
         JProgressBar hungerBar = new JProgressBar(0, 100);
         hungerBar.setSize(150, 20);
         Custom.setPercentLocation(hungerBar, 1, 50);
@@ -170,8 +171,9 @@ public class GameGUI {
         happinessBar.setForeground(Color.ORANGE);
         happinessBar.setValue(0);
         layeredPane.add(happinessBar, UI_LAYER_POSITION);
-
+        
         frame.add(layeredPane);
+        open();
     }
 
     private void loop() {

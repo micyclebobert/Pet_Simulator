@@ -4,7 +4,7 @@ public class PetBehaviour implements Runnable {
 
     private static long nanosecondBetweenAge = Custom.getNanoSeconds(1);
     private static long nanosecondBetweenHunger = Custom.getNanoSeconds(1);
-    private static boolean continueLoop = true;
+    private static volatile boolean continueLoop = true;
 
     @Override
     public void run() {

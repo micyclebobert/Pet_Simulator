@@ -1,12 +1,13 @@
 package com.cse215.g2.pet_simulator;
 
+import javax.swing.JOptionPane;
+
 public class Animal {
     /*
      * States are temporary, Stages are longer term
      */
-    private String name;
+    private final String name;
     private int age = 0;
-    private boolean sick = false;
 
     public static final String[] LIFE_STAGE_NAMES = { "Newborn", "Fledgling", "Prepubesent", "Teenager", "Adult",
             "Old" };
@@ -33,10 +34,6 @@ public class Animal {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getAge() {
         return age;
     }
@@ -44,17 +41,18 @@ public class Animal {
     public void updateAge() {
         age++;
         if (Math.random() < 0.001)
-            makeSick();
+            sicknessEvent();
     }
 
-    public void makeSick() {
-        sick = true;
+    public void sicknessEvent() {
+        String options[][] = { { "What is the capital of Japan", "Tokyo" },
+                { "What am I thinking right now?", "Nothing" } };
+        String[] random = Custom.getRandom(options);
+        String answer = "";
+        while (!answer.equalsIgnoreCase(random[1])) {
+            answer = JOptionPane.showInputDialog(random[0]);
+        }
     }
-
-    public void cureSick() {
-        sick = false;
-    }
-
     public int getCurrentLifeStageIndex() {
         return Custom.getIndexFromRange(LIFE_STAGE_AGE_RANGES, age);
     }
@@ -128,5 +126,9 @@ public class Animal {
         if (rangeArray[rangeArray.length - 1] > 100) {
             throw new VerifyError(rangeArray + "_RANGES [" + (rangeArray.length - 1) + "] is greater than 100");
         }
+    }
+
+    public Animal(String name) {
+        this.name = name;
     }
 }
