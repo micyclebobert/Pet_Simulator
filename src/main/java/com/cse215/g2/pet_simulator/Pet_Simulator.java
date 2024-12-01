@@ -1,5 +1,6 @@
 package com.cse215.g2.pet_simulator;
 
+import java.awt.Toolkit;
 
 public class Pet_Simulator {
     // Background, Toys, Pet, Action, UI
@@ -7,19 +8,30 @@ public class Pet_Simulator {
     // then cancel the current and start new
     // Actions update variables after it is over
     public static GameData gameData;
+
     public static void main(String[] args) {
-        validateClasses();
-        MainMenu.open();
+        initialize();
+        // MainMenu.open();
         Thread _GUI = new Thread(new GUIManager());
-        //Thread audio = new Thread();
-        Thread behaviour = new Thread(new PetBehaviour());
+        // Thread audio = new Thread();
+        Thread keyboardThread = new Thread(new KeyboardInput());
         _GUI.start();
-        behaviour.start();
+        // behaviour.start();
+        keyboardThread.start();
         Animal a = new Animal();
         System.out.println("Hello World!" + a.getAge());
     }
-
+    
     public static void validateClasses() {
         Animal.validateClass();
+    }
+
+    
+    /**
+     * These are the things that must happen right after the game starts
+     */
+    public static void initialize() {
+        validateClasses();
+        Custom.setScreenSize(Toolkit.getDefaultToolkit().getScreenSize());
     }
 }

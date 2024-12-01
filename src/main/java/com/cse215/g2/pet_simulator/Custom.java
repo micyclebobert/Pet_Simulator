@@ -2,7 +2,7 @@ package com.cse215.g2.pet_simulator;
 
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.Toolkit;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -11,10 +11,16 @@ import javax.swing.JComponent;
 /**
  * Common methods used in this project
  */
-public class CustomMethods {
-    private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+public class Custom {
+    private static Dimension screenSize;
+
+    public static void setScreenSize(Dimension screenSize) {
+        System.out.println(screenSize);
+        Custom.screenSize = screenSize;
+    }
 
     public static Dimension getScreenSize() {
+        System.out.println(screenSize);
         return screenSize;
     }
 
@@ -58,6 +64,58 @@ public class CustomMethods {
         comp.setLocation(xMiddle(comp.getWidth()), yMiddle(comp.getHeight()));
     }
 
+    public static void setX(JComponent comp, int x) {
+        comp.setLocation(x, comp.getY());
+    }
+
+    public static void setY(JComponent comp, int y) {
+        comp.setLocation(comp.getX(), y);
+    }
+
+    public static void setXFromRight(JComponent comp, int right) {
+        setX(comp, getScreenWidth() - comp.getWidth() - right - 1);
+    }
+
+    public static void setYFromBottom(JComponent comp, int bottom) {
+        setY(comp, getScreenHeight() - comp.getHeight() - bottom);
+    }
+
+    public static void setPercentX(JComponent comp, double percentX) {
+        setX(comp, (int) (getScreenWidth() * percentX / 100));
+    }
+
+    public static void setPercentY(JComponent comp, double percentY) {
+        setY(comp, (int) (getScreenHeight() * percentY / 100));
+    }
+
+    public static void setPercentLocation(JComponent comp, double percentX, double percentY) {
+        comp.setLocation((int) (getScreenWidth() * percentX / 100), (int) (getScreenHeight() * percentY / 100));
+    }
+
+    public static void setPercentXFromBottom(JComponent comp, double percentRight) {
+        setX(comp, (int) ((getScreenWidth() - comp.getHeight()) * percentRight / 100));
+    }
+
+    public static void setPercentYFromBottom(JComponent comp, double percentBottom) {
+        setY(comp, (int) ((getScreenHeight() - comp.getHeight()) * percentBottom / 100));
+    }
+
+    /**
+     * @param second
+     * @return converts seconds to nano seconds (multiply by 1 000 000 000)
+     */
+    public static long getNanoSeconds(double second) {
+        return (long) (1e9 * second);
+    }
+
+
+    /**
+     * @return
+     *         Example XY_RANGES is {10, 90}:
+     *         return 0 if in between 0 to 10
+     *         return 1 if in between 10 to 90
+     *         return 2 if above 90+
+     */
     public static int getIndexFromRange(int[] array, int comparator) {
         for (int i = 0; i < array.length; i++) {
             if (comparator <= array[i]) {
@@ -76,12 +134,16 @@ public class CustomMethods {
         return Pet_Simulator.class.getResource(localPath).toString();
     }
 
+    public static URL getFullPathURL(String localPath) {
+        return Pet_Simulator.class.getResource(localPath);
+    }
+
     public static ImageIcon getImageIconFromLocalPath(String localPath) {
-        return new ImageIcon(getFullPathString(localPath));
+        return new ImageIcon(getFullPathURL(localPath));
     }
 
     public static Image getImageFromLocalPath(String localPath) {
-        return new ImageIcon(getFullPathString(localPath)).getImage();
+        return new ImageIcon(getFullPathURL(localPath)).getImage();
     }
 
     /**
@@ -167,6 +229,14 @@ public class CustomMethods {
 
     public static <T> boolean isIndexInBounds(ArrayList<T> array, int index) {
         return index < array.size();
+    }
+
+    public static void exit() {
+        System.exit(0);
+    }
+
+    public static void exit(int status) {
+        System.exit(status);
     }
 
 }

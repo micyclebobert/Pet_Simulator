@@ -1,4 +1,5 @@
 package com.cse215.g2.pet_simulator;
+
 /*
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -60,83 +61,150 @@ public class GUI {
 import javax.swing.*;
 import java.awt.*;
 
-public class GameGUI {    
+public class GameGUI {
     public static final Integer /**/ BACKGROUND_LAYER_POSITION = (Integer) (0);
     public static final Integer /*      */ TOYS_LAYER_POSITION = (Integer) (1);
     public static final Integer /*       */ PET_LAYER_POSITION = (Integer) (2);
     public static final Integer /*        */ UI_LAYER_POSITION = (Integer) (3);
     public static final Integer /*  */ SETTINGS_LAYER_POSITION = (Integer) (4);
 
-    private static boolean continueLoop = true;
+    private static volatile boolean continueLoop = true;
     private static JFrame frame;
     private static JLayeredPane layeredPane;
-    
+    private static Thread behaviour = new Thread(new PetBehaviour());
+
+    /*
+     * TO DO
+     * Choose menu JCombobox
+     * Chose toys menu
+     * Animated health and hunger
+     * Eyes?
+     * Pet button, buy button, pause, exit
+     * custom type specifier like 1f 3l etc
+     */
+
     public static void open() {
+        System.out.println("new game");
+        frame.setVisible(true);
+        continueLoop = true;
+        behaviour.start();
+        loop();
+    }
+
+    public static void setup() {
+        continueLoop = true;
         frame = new JFrame("Pet Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);// Set the frame to full screen
         frame.setUndecorated(true); // Remove title bar for true full-screen experience
+        frame.setLayout(null);
 
         layeredPane = new JLayeredPane();
 
-        
-        layeredPane.setPreferredSize(CustomMethods.getScreenSize());
+        layeredPane.setSize(Custom.getScreenSize());
 
-        ImageIcon image1 = CustomMethods.getImageIconFromLocalPath("/Background.jpeg");
-        ImageIcon name=CustomMethods.getImageIconFromLocalPath("/Background.jpeg");
-        ImageIcon backgroundImage = CustomMethods.getScaledImageIcon("/Background.jpeg", CustomMethods.getScreenWidth(), CustomMethods.getScreenHeight(),Image.SCALE_SMOOTH);
+        ImageIcon image1 = Custom.getImageIconFromLocalPath("/Background.jpeg");
+        ImageIcon backgroundImage = Custom.getScaledImageIcon("/Background.jpeg", Custom.getScreenWidth(),
+                Custom.getScreenHeight(), Image.SCALE_SMOOTH);
 
         JLabel label1 = new JLabel(image1);
         JLabel backgroundLabel = new JLabel(backgroundImage);
 
-        label1.setBounds(0,0, image1.getIconWidth(), image1.getIconHeight());
-        backgroundLabel.setBounds(0, 0, CustomMethods.getScreenWidth(),CustomMethods.getScreenHeight());
+        label1.setBounds(0, 0, image1.getIconWidth(), image1.getIconHeight());
+        backgroundLabel.setBounds(0, 0, Custom.getScreenWidth(), Custom.getScreenHeight());
 
-        layeredPane.add(label1, Integer.valueOf(1)); // Lower layer
-        layeredPane.add(backgroundLabel, Integer.valueOf(2)); // Higher layer
+        // layeredPane.add(label1, Integer.valueOf(1)); // Lower layer
+        layeredPane.add(backgroundLabel, BACKGROUND_LAYER_POSITION); // Higher layer
 
         JLabel textLabel = new JLabel("Full Screen LayeredPane Example", SwingConstants.CENTER);
         textLabel.setFont(new Font("Arial", Font.BOLD, 24));
         textLabel.setForeground(Color.WHITE);
-        textLabel.setBounds(0, 0, CustomMethods.getScreenWidth(), 50);
-        //layeredPane.add(textLabel, Integer.valueOf(3));
+        textLabel.setBounds(0, 0, Custom.getScreenWidth(), 50);
+        layeredPane.add(textLabel, Integer.valueOf(3));
+
+        JButton btn = new JButton("Back");
+        btn.setSize(100, 100);
+        Custom.setXFromRight(btn, 0);
+        btn.addActionListener(e -> close());
+        layeredPane.add(btn, UI_LAYER_POSITION);
+
+        JButton headPatButton = new JButton("Head Pat");
+        headPatButton.setSize(100, 20);
+        Custom.setPercentX(headPatButton, 20);
+        Custom.setYFromBottom(headPatButton, 10);
+        layeredPane.add(headPatButton, UI_LAYER_POSITION);
+
+        JButton buyToysButton = new JButton("Buy Toys");
+        buyToysButton.setSize(100, 20);
+        Custom.setPercentX(buyToysButton, 40);
+        Custom.setYFromBottom(buyToysButton, 10);
+        layeredPane.add(buyToysButton, UI_LAYER_POSITION);
+
+        JButton feedPetButton = new JButton("Feed Pet");
+        feedPetButton.setSize(100, 20);
+        Custom.setPercentX(feedPetButton, 60);
+        Custom.setYFromBottom(feedPetButton, 10);
+        layeredPane.add(feedPetButton, UI_LAYER_POSITION);
+
+        JProgressBar hungerBar = new JProgressBar(0,100);
+        hungerBar.setSize(150, 20);
+        Custom.setPercentLocation(hungerBar, 1, 50);
+        hungerBar.setString("Hunger");
+        hungerBar.setStringPainted(true);
+        // healthBar.setBackground(Color.BLACK);
+        hungerBar.setForeground(Color.BLUE);
+        hungerBar.setValue(0);
+        layeredPane.add(hungerBar, UI_LAYER_POSITION);
+
+        JProgressBar happinessBar = new JProgressBar(0,100);
+        happinessBar.setSize(150, 20);
+        Custom.setPercentLocation(happinessBar, 1, 55);
+        happinessBar.setString("Happiness");
+        happinessBar.setStringPainted(true);
+        // happinessBar.setBackground(Color.BLACK);
+        happinessBar.setForeground(Color.ORANGE);
+        happinessBar.setValue(0);
+        layeredPane.add(happinessBar, UI_LAYER_POSITION);
 
         frame.add(layeredPane);
-        frame.pack();
-        System.out.println("here");
-        frame.setVisible(true);
-        //animate();
     }
-    private static void animate(){
-        long nanosecondBetweenFrames=1 /Settings.getGameFPS();
+
+    private static void loop() {
+        long nanosecondBetweenFrames = Custom.getNanoSeconds(1 / new Settings().getGameFPS());
         long lastFrameUpdateTime = System.nanoTime();
-        long currentTime=System.nanoTime();
+        long currentTime = System.nanoTime();
+        System.out.println("loop bout to start");
         while (continueLoop) {
-            currentTime=System.nanoTime();
-            if(currentTime-lastFrameUpdateTime>=nanosecondBetweenFrames){
-                lastFrameUpdateTime=currentTime;
-                //updateAnimation();
+            currentTime = System.nanoTime();
+            if (currentTime - lastFrameUpdateTime >= nanosecondBetweenFrames) {
+                // System.out.println();
+                lastFrameUpdateTime = currentTime;
+                // updateAnimation();
             }
         }
-        //frame.dispose();
+        System.out.println("hrr");
+        frame.setVisible(false);
+        MainMenu.open();
     }
-    public static void showLayer(Integer layerPosition){
-        Component[] components = layeredPane.getComponentsInLayer((int)layerPosition);
+
+    public static void showLayer(Integer layerPosition) {
+        Component[] components = layeredPane.getComponentsInLayer((int) layerPosition);
         for (Component component : components) {
             component.setVisible(true);
         }
     }
-    public static void hideLayer(Integer layerPosition){
-        Component[] components = layeredPane.getComponentsInLayer((int)layerPosition);
+
+    public static void hideLayer(Integer layerPosition) {
+        Component[] components = layeredPane.getComponentsInLayer((int) layerPosition);
         for (Component component : components) {
             component.setVisible(false);
         }
     }
-    
-    public static void close(){
-        continueLoop=false;
+
+    public static void close() {
+        System.out.println("close");
+        continueLoop = false;
     }
 
 }

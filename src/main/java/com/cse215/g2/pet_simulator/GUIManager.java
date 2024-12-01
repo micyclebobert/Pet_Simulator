@@ -4,9 +4,9 @@ public class GUIManager implements Runnable {
 
     @Override
     public void run() {
+        MainMenu.setup();
+        GameGUI.setup();
         GameGUI.open();
-        //MainMenu.open();
-        
     }
     
 }
