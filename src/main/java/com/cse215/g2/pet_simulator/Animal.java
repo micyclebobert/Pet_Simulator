@@ -49,7 +49,7 @@ public class Animal {
                 { "What am I thinking right now?", "Nothing" } };
         String[] random = Custom.getRandom(options);
         String answer = "";
-        while (!answer.equalsIgnoreCase(random[1])) {
+        while (!answer.trim().equalsIgnoreCase(random[1])) {
             answer = JOptionPane.showInputDialog(random[0]);
         }
     }

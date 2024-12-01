@@ -12,7 +12,6 @@ public class Pet_Simulator {
     public static void main(String[] args) {
         initialize();
         Animal a = new Animal("l");
-        a.sicknessEvent();
         // MainMenu.open();
         Thread _GUI = new Thread(new GUIManager());
         // Thread audio = new Thread();
