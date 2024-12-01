@@ -1,4 +1,4 @@
-package com.cse215.g2;
+package com.cse215.g2.pet_simulator;
 
 import javax.swing.JButton;
 

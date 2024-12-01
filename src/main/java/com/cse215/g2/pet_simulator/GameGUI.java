@@ -68,10 +68,10 @@ public class GameGUI {
     public static final Integer /*        */ UI_LAYER_POSITION = (Integer) (3);
     public static final Integer /*  */ SETTINGS_LAYER_POSITION = (Integer) (4);
 
-    private static volatile boolean continueLoop = true;
-    private static JFrame frame;
-    private static JLayeredPane layeredPane;
-    private static Thread behaviour = new Thread(new PetBehaviour());
+    private volatile boolean continueLoop = true;
+    private JFrame frame;
+    private JLayeredPane layeredPane;
+    private Thread behaviour = new Thread(new PetBehaviour());
 
     /*
      * TO DO
@@ -82,8 +82,12 @@ public class GameGUI {
      * Pet button, buy button, pause, exit
      * custom type specifier like 1f 3l etc
      */
+    public GameGUI() {
+        setup();
+        open();
+    }
 
-    public static void open() {
+    public void open() {
         System.out.println("new game");
         frame.setVisible(true);
         continueLoop = true;
@@ -91,7 +95,7 @@ public class GameGUI {
         loop();
     }
 
-    public static void setup() {
+    public void setup() {
         continueLoop = true;
         frame = new JFrame("Pet Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -147,7 +151,7 @@ public class GameGUI {
         Custom.setYFromBottom(feedPetButton, 10);
         layeredPane.add(feedPetButton, UI_LAYER_POSITION);
 
-        JProgressBar hungerBar = new JProgressBar(0,100);
+        JProgressBar hungerBar = new JProgressBar(0, 100);
         hungerBar.setSize(150, 20);
         Custom.setPercentLocation(hungerBar, 1, 50);
         hungerBar.setString("Hunger");
@@ -157,7 +161,7 @@ public class GameGUI {
         hungerBar.setValue(0);
         layeredPane.add(hungerBar, UI_LAYER_POSITION);
 
-        JProgressBar happinessBar = new JProgressBar(0,100);
+        JProgressBar happinessBar = new JProgressBar(0, 100);
         happinessBar.setSize(150, 20);
         Custom.setPercentLocation(happinessBar, 1, 55);
         happinessBar.setString("Happiness");
@@ -170,7 +174,7 @@ public class GameGUI {
         frame.add(layeredPane);
     }
 
-    private static void loop() {
+    private void loop() {
         long nanosecondBetweenFrames = Custom.getNanoSeconds(1 / new Settings().getGameFPS());
         long lastFrameUpdateTime = System.nanoTime();
         long currentTime = System.nanoTime();
@@ -188,21 +192,21 @@ public class GameGUI {
         new MainMenu();
     }
 
-    public static void showLayer(Integer layerPosition) {
+    public void showLayer(Integer layerPosition) {
         Component[] components = layeredPane.getComponentsInLayer((int) layerPosition);
         for (Component component : components) {
             component.setVisible(true);
         }
     }
 
-    public static void hideLayer(Integer layerPosition) {
+    public void hideLayer(Integer layerPosition) {
         Component[] components = layeredPane.getComponentsInLayer((int) layerPosition);
         for (Component component : components) {
             component.setVisible(false);
         }
     }
 
-    public static void close() {
+    public void close() {
         System.out.println("close");
         continueLoop = false;
     }
