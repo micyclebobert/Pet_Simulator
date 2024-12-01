@@ -185,7 +185,7 @@ public class GameGUI {
         }
         System.out.println("hrr");
         frame.setVisible(false);
-        MainMenu.open();
+        new MainMenu();
     }
 
     public static void showLayer(Integer layerPosition) {

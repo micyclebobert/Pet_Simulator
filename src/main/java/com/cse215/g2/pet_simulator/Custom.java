@@ -64,6 +64,10 @@ public class Custom {
         comp.setLocation(xMiddle(comp.getWidth()), yMiddle(comp.getHeight()));
     }
 
+    public static void setPercentSize(JComponent comp, int width, int height) {
+        comp.setSize(getScreenWidth() * width / 100, getScreenHeight() * height / 100);
+    }
+
     public static void setX(JComponent comp, int x) {
         comp.setLocation(x, comp.getY());
     }
@@ -107,7 +111,6 @@ public class Custom {
     public static long getNanoSeconds(double second) {
         return (long) (1e9 * second);
     }
-
 
     /**
      * @return

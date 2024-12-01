@@ -1,7 +1,11 @@
 package com.cse215.g2.pet_simulator;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
+import java.awt.Button;
 import java.awt.Color;
 
 import javax.swing.JButton;
@@ -14,9 +18,11 @@ public class MainMenu {
      * private static JButton settings=new JButton("Settings");
      */
     private static JFrame frame;
-    
+    private JPanel buttonPanel;
 
-    public static void setup() {
+
+    public MainMenu() {
+
 
         JButton newGame = new JButton("New Game");
         JButton continueGame = new JButton("Continue Game");
@@ -38,18 +44,35 @@ public class MainMenu {
         frame.setBackground(Color.BLACK);
         frame.add(newGame);
         frame.add(exit);
+        open();
     }
-    public static void open(){
+    public void open(){
         frame.setVisible(true);
     }
 
-    public static void close() {
+    public void close() {
         // frame.dispose();
         frame.setVisible(false);
     }
 
-    public static void newGame() {
-        close();
-        GameGUI.open();
+    public void newGame() {
+        JPanel selectionPanel=new JPanel();
+        selectionPanel.setLayout(null);
+        Custom.setPercentSize(selectionPanel, 50, 50);
+        Custom.xyCenter(selectionPanel);
+        selectionPanel.setBackground(Color.BLUE);
+        selectionPanel.setOpaque(true);
+        selectionPanel.setVisible(true);
+        System.out.println("selectionPanel.getBounds() = " + selectionPanel.getBounds());
+        JLabel b = new JLabel("Select Pet");
+        b.setSize(50,50);
+        b.setLocation(0, 0);
+        // frame.removeAll();
+        selectionPanel.add(b);
+        frame.add(selectionPanel);
+        frame.revalidate();
+        frame.repaint();
+        // close();
+        // GameGUI.open();
     }
 }
