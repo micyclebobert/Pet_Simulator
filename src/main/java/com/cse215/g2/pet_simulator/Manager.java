@@ -62,6 +62,7 @@ public class Manager implements Runnable {
 
     @Override
     public void run() {
+        setMenu(new OpeningAnimation());
         setMenu(new MainMenu());
     }
 
