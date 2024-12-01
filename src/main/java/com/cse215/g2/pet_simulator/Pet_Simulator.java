@@ -24,6 +24,12 @@ public class Pet_Simulator {
         Animal.validateClass();
     }
 
+    public static void workPls(Animal a){
+        a.sicknessEvent();
+        new GameGUI(a);
+
+    }
+
     
     /**
      * These are the things that must happen right after the game starts

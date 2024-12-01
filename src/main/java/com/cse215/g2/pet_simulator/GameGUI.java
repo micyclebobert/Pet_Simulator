@@ -69,7 +69,7 @@ public class GameGUI {
     public static final Integer /*  */ SETTINGS_LAYER_POSITION = (Integer) (4);
 
     private volatile boolean continueLoop = true;
-    private FullSceenFrame frame;
+    private volatile FullSceenFrame frame;
     private JLayeredPane layeredPane;
     private Animal pet;
     private Thread behaviour = new Thread(new PetBehaviour());
@@ -91,19 +91,29 @@ public class GameGUI {
     public void open() {
         System.out.println("new game");
         frame.setVisible(true);
+        frame.repaint();
+        frame.revalidate();
+        frame.repaint();
         continueLoop = true;
         behaviour.start();
         loop();
     }
     
     public void setup() {
+        JFrame jf = new JFrame("tst");
+        jf.setSize(300,300);
+        jf.setVisible(true);
         continueLoop = true;
-        frame = new FullSceenFrame("Pet Simulator");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);// Set the frame to full screen
-        frame.setUndecorated(true); // Remove title bar for true full-screen experience
-        frame.setLayout(null);
+        frame = new FullSceenFrame();
+        frame.setVisible(true);
+        try {
+            System.out.println("sleep start");
+            Thread.sleep(2000);
+            System.out.println("sleep end");
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         layeredPane = new JLayeredPane();
         
