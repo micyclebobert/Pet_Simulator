@@ -11,7 +11,7 @@ public class GameData implements Serializable {
     private Settings settings;
 
     public GameData() {
-        pet = new Animal();
+        // pet = new Animal();
         settings = new Settings();
     }
 

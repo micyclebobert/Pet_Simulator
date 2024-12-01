@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,16 +25,19 @@ public class CloseButton extends JButton {
         Custom.setXFromRight(this, 0);
         // this.setIcon(NORMAL_ICON);
         this.setBackground(Color.RED);
+        this.setForeground(Color.WHITE);
         this.setText("X");
         this.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 25));
         this.addActionListener(e -> Custom.exit(1));
         this.addMouseListener(new MouseAdapter() {
             @Override
+            //Mouse is over the button
             public void mouseEntered(MouseEvent e) {
                 onHover();
             }
 
             @Override
+            //Mouse exits the button area
             public void mouseExited(MouseEvent e) {
                 afterHover();
             }

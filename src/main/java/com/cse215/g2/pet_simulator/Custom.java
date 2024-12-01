@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -64,8 +65,27 @@ public class Custom {
         comp.setLocation(xMiddle(comp.getWidth()), yMiddle(comp.getHeight()));
     }
 
+    public static int getWidthFromPercent(int width) {
+        return getScreenWidth() * width / 100;
+    }
+
+    public static int getHeightFromPercent(int height) {
+        return getScreenHeight() * height / 100;
+    }
+
+    public static void setPercentWidth(JComponent comp, int width) {
+        comp.setSize(getWidthFromPercent(width), comp.getHeight());
+    }
+
+    public static void setPercentHeight(JComponent comp, int height) {
+        comp.setSize(comp.getWidth(), getHeightFromPercent(height));
+    }
+
     public static void setPercentSize(JComponent comp, int width, int height) {
-        comp.setSize(getScreenWidth() * width / 100, getScreenHeight() * height / 100);
+        // comp.setSize(getScreenWidth() * width / 100, getScreenHeight() * height /
+        // 100);
+        setPercentWidth(comp, width);
+        setPercentHeight(comp, height);
     }
 
     public static void setX(JComponent comp, int x) {
@@ -93,7 +113,10 @@ public class Custom {
     }
 
     public static void setPercentLocation(JComponent comp, double percentX, double percentY) {
-        comp.setLocation((int) (getScreenWidth() * percentX / 100), (int) (getScreenHeight() * percentY / 100));
+        // comp.setLocation((int) (getScreenWidth() * percentX / 100), (int)
+        // (getScreenHeight() * percentY / 100));
+        setPercentX(comp, percentX);
+        setPercentY(comp, percentY);
     }
 
     public static void setPercentXFromBottom(JComponent comp, double percentRight) {
@@ -126,6 +149,10 @@ public class Custom {
             }
         }
         return array.length - 1;
+    }
+
+    public static <T>T getRandom(T[] array) {
+        return array[new Random().nextInt(array.length)];
     }
 
     /**

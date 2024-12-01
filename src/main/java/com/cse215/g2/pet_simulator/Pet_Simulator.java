@@ -11,14 +11,13 @@ public class Pet_Simulator {
 
     public static void main(String[] args) {
         initialize();
+        Animal a = new Animal("l");
+        a.sicknessEvent();
         // MainMenu.open();
         Thread _GUI = new Thread(new GUIManager());
         // Thread audio = new Thread();
-        Thread keyboardThread = new Thread(new KeyboardInput());
         _GUI.start();
         // behaviour.start();
-        keyboardThread.start();
-        Animal a = new Animal();
         System.out.println("Hello World!" + a.getAge());
     }
     
