@@ -42,8 +42,8 @@ public class GameData implements Serializable {
             return returnData;
         } catch (Exception e) {
             System.out.println("error loading");
+            return new GameData();
         }
-        return new GameData();
     }
     /*
      * public static void loadData() {

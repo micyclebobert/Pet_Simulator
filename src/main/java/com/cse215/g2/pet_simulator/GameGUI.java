@@ -68,11 +68,11 @@ public class GameGUI {
     public static final Integer /*        */ UI_LAYER_POSITION = (Integer) (3);
     public static final Integer /*  */ SETTINGS_LAYER_POSITION = (Integer) (4);
 
-    private volatile boolean continueLoop = true;
     private volatile FullSceenFrame frame;
     private JLayeredPane layeredPane;
     private Animal pet;
     private Thread behaviour = new Thread(new PetBehaviour());
+    private Thread loop = new Thread(new GUIUpdateLoop());
 
     /*
      * TO DO
@@ -85,44 +85,32 @@ public class GameGUI {
      */
     public GameGUI(Animal pet) {
         this.pet = pet;
+        //TODO 
+        if(this.pet==null)this.pet= new Animal("A");
         setup();
     }
-    
+
     public void open() {
         System.out.println("new game");
         frame.setVisible(true);
         frame.repaint();
         frame.revalidate();
         frame.repaint();
-        continueLoop = true;
-        behaviour.start();
         loop();
     }
-    
+
     public void setup() {
-        JFrame jf = new JFrame("tst");
-        jf.setSize(300,300);
-        jf.setVisible(true);
-        continueLoop = true;
         frame = new FullSceenFrame();
         frame.setVisible(true);
-        try {
-            System.out.println("sleep start");
-            Thread.sleep(2000);
-            System.out.println("sleep end");
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
 
         layeredPane = new JLayeredPane();
-        
+
         layeredPane.setSize(Custom.getScreenSize());
-        
+
         ImageIcon image1 = Custom.getImageIconFromLocalPath("/Background.jpeg");
         ImageIcon backgroundImage = Custom.getScaledImageIcon("/Background.jpeg", Custom.getScreenWidth(),
                 Custom.getScreenHeight(), Image.SCALE_SMOOTH);
-                
+
         JLabel label1 = new JLabel(image1);
         JLabel backgroundLabel = new JLabel(backgroundImage);
 
@@ -155,13 +143,13 @@ public class GameGUI {
         Custom.setPercentX(buyToysButton, 40);
         Custom.setYFromBottom(buyToysButton, 10);
         layeredPane.add(buyToysButton, UI_LAYER_POSITION);
-        
+
         JButton feedPetButton = new JButton("Feed Pet");
         feedPetButton.setSize(100, 20);
         Custom.setPercentX(feedPetButton, 60);
         Custom.setYFromBottom(feedPetButton, 10);
         layeredPane.add(feedPetButton, UI_LAYER_POSITION);
-        
+
         JProgressBar hungerBar = new JProgressBar(0, 100);
         hungerBar.setSize(150, 20);
         Custom.setPercentLocation(hungerBar, 1, 50);
@@ -181,27 +169,15 @@ public class GameGUI {
         happinessBar.setForeground(Color.ORANGE);
         happinessBar.setValue(0);
         layeredPane.add(happinessBar, UI_LAYER_POSITION);
-        
+
         frame.add(layeredPane);
         open();
     }
 
     private void loop() {
-        long nanosecondBetweenFrames = Custom.getNanoSeconds(1 / new Settings().getGameFPS());
-        long lastFrameUpdateTime = System.nanoTime();
-        long currentTime = System.nanoTime();
         System.out.println("loop bout to start");
-        while (continueLoop) {
-            currentTime = System.nanoTime();
-            if (currentTime - lastFrameUpdateTime >= nanosecondBetweenFrames) {
-                // System.out.println();
-                lastFrameUpdateTime = currentTime;
-                // updateAnimation();
-            }
-        }
-        System.out.println("hrr");
-        frame.setVisible(false);
-        new MainMenu();
+        loop.start();
+        behaviour.start();
     }
 
     public void showLayer(Integer layerPosition) {
@@ -219,8 +195,12 @@ public class GameGUI {
     }
 
     public void close() {
-        System.out.println("close");
-        continueLoop = false;
+        behaviour.interrupt();
+        loop.interrupt();
+    }
+
+    public void run() {
+        // setup();
     }
 
 }

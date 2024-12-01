@@ -2,18 +2,14 @@ package com.cse215.g2.pet_simulator;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class CloseButton extends JButton {
     public final static int WIDTH = 25;
     public final static int HEIGHT = 25;
-    public final static ImageIcon NORMAL_ICON = Custom.getScaledImageIcon("/close.png", WIDTH, HEIGHT,
-            Image.SCALE_SMOOTH);
 
     // public final static ImageIcon HOVER_ICON;
     public CloseButton() {
@@ -23,7 +19,6 @@ public class CloseButton extends JButton {
         this.setSize(WIDTH, HEIGHT);
         this.setLocation(0, 0);
         Custom.setXFromRight(this, 0);
-        // this.setIcon(NORMAL_ICON);
         this.setBackground(Color.RED);
         this.setForeground(Color.WHITE);
         this.setText("X");

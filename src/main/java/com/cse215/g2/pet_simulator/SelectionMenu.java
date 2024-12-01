@@ -32,7 +32,9 @@ public class SelectionMenu {
     public void startGame() {
         close();
         Animal a = new Animal(JOptionPane.showInputDialog("Input Pet Name"));
-        Pet_Simulator.workPls(a);
+        // Pet_Simulator.workPls(a);
+        // new Thread(new GameGUI(a));
+        new GameGUI(a);
     }
 
     public void open() {

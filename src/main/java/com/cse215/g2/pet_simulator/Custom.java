@@ -119,7 +119,7 @@ public class Custom {
         setPercentY(comp, percentY);
     }
 
-    public static void setPercentXFromBottom(JComponent comp, double percentRight) {
+    public static void setPercentXFromRight(JComponent comp, double percentRight) {
         setX(comp, (int) ((getScreenWidth() - comp.getHeight()) * percentRight / 100));
     }
 
@@ -140,7 +140,7 @@ public class Custom {
      *         Example XY_RANGES is {10, 90}:
      *         return 0 if in between 0 to 10
      *         return 1 if in between 10 to 90
-     *         return 2 if above 90+
+     *         return 2 if above 90 to 100
      */
     public static int getIndexFromRange(int[] array, int comparator) {
         for (int i = 0; i < array.length; i++) {
@@ -151,7 +151,7 @@ public class Custom {
         return array.length - 1;
     }
 
-    public static <T>T getRandom(T[] array) {
+    public static <T> T getRandom(T[] array) {
         return array[new Random().nextInt(array.length)];
     }
 

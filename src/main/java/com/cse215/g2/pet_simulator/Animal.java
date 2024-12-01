@@ -53,6 +53,7 @@ public class Animal {
             answer = JOptionPane.showInputDialog(random[0]);
         }
     }
+
     public int getCurrentLifeStageIndex() {
         return Custom.getIndexFromRange(LIFE_STAGE_AGE_RANGES, age);
     }
