@@ -67,6 +67,16 @@ public class GameGUI extends Menu {
     private static JProgressBar happinessBar;
     private static JProgressBar hungerBar;
     private static JLabel textLabel;
+    private static JLabel physicalLabel;
+    private static JLabel mentalLabel;
+    public static void setPhysicalLabel(String text) {
+        physicalLabel.setText(text);
+    }
+
+    public static void setMentalLabel(String text) {
+        mentalLabel.setText(text);
+    }
+
     private static Thread behaviour = new Thread(new PetBehaviour());
     private static Thread loop = new Thread(new GUIUpdateLoop());
 
@@ -152,6 +162,13 @@ public class GameGUI extends Menu {
         hungerBar.setValue(0);
         layeredPane.add(hungerBar, UI_LAYER_POSITION);
 
+        physicalLabel = new JLabel("");
+        physicalLabel.setSize(150, 20);
+        Custom.setX(physicalLabel, hungerBar.getWidth()+20);
+        Custom.setPercentY(physicalLabel, 50);
+        physicalLabel.setForeground(new Color(173,  216, 230));
+        layeredPane.add(physicalLabel, UI_LAYER_POSITION);
+
         happinessBar = new JProgressBar(0, 100);
         happinessBar.setSize(150, 20);
         Custom.setPercentLocation(happinessBar, 1, 55);
@@ -160,6 +177,13 @@ public class GameGUI extends Menu {
         happinessBar.setForeground(Color.ORANGE);
         happinessBar.setValue(0);
         layeredPane.add(happinessBar, UI_LAYER_POSITION);
+
+        mentalLabel = new JLabel("");
+        mentalLabel.setSize(150, 20);
+        Custom.setX(mentalLabel, happinessBar.getWidth()+20);
+        Custom.setPercentY(mentalLabel, 55);
+        mentalLabel.setForeground(Color.ORANGE);
+        layeredPane.add(mentalLabel, UI_LAYER_POSITION);
 
         frame.add(layeredPane);
         open();

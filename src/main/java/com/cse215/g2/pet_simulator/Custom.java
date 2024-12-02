@@ -258,8 +258,21 @@ public class Custom {
         return stringArray;
     }
 
+    public static boolean isLettersOnly(String str) {
+        char[] chars = str.trim().toCharArray();
+        int j = 0;
+        for (int i = 0; i < chars.length; i++) {
+            if (!Character.isLetter(chars[i]) && chars[i]!=' ') {
+                return false;
+            } else
+                j++;
+        }
+
+        return j >= 3;
+    }
+
     public static void exit(int status) {
-        if (Manager.getMenuType()==2) {
+        if (Manager.getMenuType() == 2) {
             GameGUI.endThreads();
             new GameData(Manager.getPet()).saveData();
         }

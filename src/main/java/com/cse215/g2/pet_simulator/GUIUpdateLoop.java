@@ -17,6 +17,9 @@ public class GUIUpdateLoop implements Runnable {
                 GameGUI.setTextLabel(""+pet.getName()+" ("+pet.getCurrentLifeStageName()+", "+pet.getAge()+")");
                 GameGUI.setHunger(pet.getCurrentHungerLevel());
                 GameGUI.setHappiness(pet.getCurrentHappinessLevel());
+                GameGUI.setPhysicalLabel(pet.getCurrentPhysicalHealthStageName());
+                GameGUI.setMentalLabel(pet.getCurrentMentalHealthStageName());
+
                 // updateAnimation();
             }
         }

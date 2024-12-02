@@ -59,9 +59,9 @@ public class Animal implements Serializable{
 
     public void sicknessEvent() {
         String[] random = Custom.getRandom(TRIVIAS);
-        String answer = "";
+        String answer = JOptionPane.showInputDialog(random[0]);
         while (!answer.trim().equalsIgnoreCase(random[1])) {
-            answer = JOptionPane.showInputDialog(random[0]);
+            answer = JOptionPane.showInputDialog("Wrong guess, Try again. "+random[0]);
         }
     }
 
@@ -140,34 +140,14 @@ public class Animal implements Serializable{
     }
 
     public static Animal askForNew() {
-        return new Animal(JOptionPane.showInputDialog("Input new pet name"));
-    }
-
-    public static void validateClass() {
-        validateArray(LIFE_STAGE_NAMES, LIFE_STAGE_AGE_RANGES, "LIFE_STAGE");
-        validateArray(HUNGER_STATE_NAMES, HUNGER_STATE_RANGES, "HUNGER_STATE");
-        validateArray(PHYSICAL_HEALTH_STAGE_NAMES, PHYSICAL_HEALTH_STAGE_RANGES, "PHYSICAL_HEALTH");
-        validateArray(MENTAL_HEALTH_STAGE_NAMES, MENTAL_HEALTH_STAGE_RANGES, "MENTAL_HEALTH");
-    }
-
-    public static void validateArray(String[] nameArray, int[] rangeArray, String nameOfArray) {
-        validateNameAndRangeLengths(nameArray, rangeArray, nameOfArray);
-        validateRangeArray(rangeArray, nameOfArray);
-    }
-
-    public static void validateNameAndRangeLengths(String[] nameArray, int[] rangeArray, String nameOfArray) {
-        if (nameArray.length - 1 != rangeArray.length) {
-            throw new VerifyError(nameOfArray + "_NAMES length - 1 does not equal " + nameOfArray + "_RANGES length");
+        String input = JOptionPane.showInputDialog("Input new pet name");
+        while (!Custom.isLettersOnly(input)) {
+            input = JOptionPane.showInputDialog("Pet name must contain only letters and be 3 characters long");
         }
-    }
-
-    public static void validateRangeArray(int[] rangeArray, String nameOfArray) {
-        if (rangeArray[rangeArray.length - 1] > 100) {
-            throw new VerifyError(rangeArray + "_RANGES [" + (rangeArray.length - 1) + "] is greater than 100");
-        }
+        return new Animal(input);
     }
 
     public Animal(String name) {
-        this.name = name;
+        this.name = name.trim().toUpperCase();
     }
 }

@@ -31,26 +31,32 @@ public class MainMenu  extends Menu {
         JButton newGameButton = new JButton("New Game");
         JButton loadGameButton = new JButton("Load Game");
         JButton settingsButton = new JButton("Settings");
+        JButton aboutUsButton = new JButton("About Us");
         JButton exitButton = new JButton("Exit");
         newGameButton.setSize(100, 30);
         loadGameButton.setSize(100, 30);
         settingsButton.setSize(100, 30);
+        aboutUsButton.setSize(100, 30);
         exitButton.setSize(100, 30);
         Custom.setPercentY(newGameButton, 50);
-        Custom.setPercentY(loadGameButton, 60);
-        Custom.setPercentY(settingsButton, 70);
-        Custom.setPercentY(exitButton, 80);
+        Custom.setPercentY(loadGameButton, 55);
+        Custom.setPercentY(settingsButton, 60);
+        Custom.setPercentY(aboutUsButton, 65);
+        Custom.setPercentY(exitButton, 70);
         Custom.xCenter(newGameButton);
         Custom.xCenter(loadGameButton);
         Custom.xCenter(settingsButton);
+        Custom.xCenter(aboutUsButton);
         Custom.xCenter(exitButton);
         newGameButton.addActionListener(_ -> newGame());
         loadGameButton.addActionListener(_ -> loadGame());
         settingsButton.addActionListener(_ -> openSettings());
+        aboutUsButton.addActionListener(_ -> openAboutUs());
         exitButton.addActionListener(_ -> Custom.exit(1));
         frame.add(newGameButton);
         frame.add(loadGameButton);
         frame.add(settingsButton);
+        frame.add(aboutUsButton);
         frame.add(exitButton);
         open();
     }
@@ -81,5 +87,8 @@ public class MainMenu  extends Menu {
     public void openSettings() {
         // close();
         Manager.setMenu(new SettingsMenu());
+    }
+    public void openAboutUs(){
+        Manager.setMenu(new AboutUsMenu());
     }
 }
